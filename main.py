@@ -10,6 +10,7 @@ conn = None
 cursor = None
 
 
+
 def main():
     global conn, cursor
     try:

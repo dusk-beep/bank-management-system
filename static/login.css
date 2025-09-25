@@ -1,0 +1,12 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: dodgerblue;
+}
+
+h1 {
+	text-align: center;
+	color: black;	
+}
