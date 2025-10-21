@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f9f9f9;
+      /* Light gray background */
+      color: #4CAF50;
+      /* Dark text color */
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      background-color: #28a745;
+      /* Green background for navbar */
+      padding: 10px 20px;
+      /* Padding inside the nav */
+      display: flex;
+      /* Flexbox for layout */
+      justify-content: space-between;
+      /* Space between items */
+      align-items: center;
+      /* Center-align items */
+    }
+
+    .navbar a {
+      color: white;
+      /* White text for links */
+      text-decoration: none;
+      /* Remove underline */
+      padding: 14px 20px;
+      /* Padding around links */
+      border-radius: 5px;
+      /* Rounded corners */
+      transition: background-color 0.3s;
+      /* Smooth transition */
+    }
+
+    .navbar a:hover {
+      background-color: #218838;
+      /* Darker green on hover */
+    }
+
+    .container {
+      max-width: 800px;
+      /* Maximum width for the container */
+      margin: 50px auto;
+      /* Centering the container */
+      padding: 20px;
+      /* Padding inside the container */
+      background-color: #ffffff;
+      /* White background for the container */
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow for depth */
+      border-radius: 8px;
+      /* Rounded corners */
+      /* text-align: center; */
+      /* Centered text */
+    }
+
+    h1 {
+      margin-bottom: 30px;
+      /* Spacing below the heading */
+      font-size: 2.5em;
+      /* Large font size */
+      color: #4CAF50;
+      /* Green color for the heading */
+    }
+
+    .username {
+      font-weight: bold;
+      /* Bolder username */
+    }
+
+    .button-grid {
+      display: grid;
+      /* Using grid layout */
+      grid-template-columns: repeat(3, 1fr);
+      /* Three columns */
+      gap: 20px;
+      /* Space between buttons */
+    }
+
+    .action-button {
+      background-color: #28a745;
+      /* Green button color */
+      color: white;
+      /* White text on buttons */
+      border: none;
+      /* No border */
+      border-radius: 5px;
+      /* Rounded corners for buttons */
+      padding: 15px;
+      /* Padding inside buttons */
+      font-size: 1.2em;
+      /* Larger text inside buttons */
+      transition: background-color 0.3s;
+      /* Smooth transition on hover */
+      cursor: pointer;
+      /* Pointer cursor on buttons */
+      text-align: center;
+      /* Centered text in buttons */
+    }
+
+    .action-button:hover {
+      background-color: #218838;
+      /* Darker green on hover */
+    }
+
+    .username {
+      font-weight: bold;
+      /* Bolder username */
+    }
+
+    .user-info {
+      margin-top: 20px;
+      /* Spacing above user info */
+      padding: 15px;
+      /* Padding inside user info */
+      background-color: #e9f7ef;
+      /* Light green background for user info */
+      border-radius: 5px;
+      /* Rounded corners */
+      box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow */
+      text-align: left;
+      /* Align text to the left */
+      font-size: 1.2em;
+      /* Slightly larger font size for user info */
+      line-height: 1.5;
+      /* Better line spacing */
+    }
+
+    .user-info div {
+      margin: 5px 0;
+      /* Spacing between each info line */
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo">My Bank</div>
+    <div>
+      <a href="/debit">Debit</a>
+      <a href="/credit">Credit</a>
+      <a href="/transactions">Transactions</a>
+      <a href="/logout">Logout</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h1>Bank Name</h1>
+  </div>
+  <div class="user-info">
+    <div>Name: {{user.user_name}}</div>
+    <div>Email: {{user.email}}</div>
+    <div>Start Date: {{user.start_date}}</div>
+    <div>Type: {{user.account_type}}</div>
+    <div>Balance: {{user.account_balance}}</div>
+  </div>
+</body>
+
+</html>

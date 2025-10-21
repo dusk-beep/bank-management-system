@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deposit Money</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      /* Light background */
+      margin: 20px;
+      color: #333;
+      /* Dark text for contrast */
+    }
+
+    h1 {
+      color: #4CAF50;
+      /* Green color for the header */
+    }
+
+    #depositForm {
+      background-color: #ffffff;
+      /* White background for form */
+      border: 1px solid #4CAF50;
+      /* Green border */
+      border-radius: 8px;
+      /* Slightly rounded corners */
+      padding: 20px;
+      /* Padding around the form */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      /* Soft shadow */
+      margin-top: 20px;
+      /* Margin above the form */
+    }
+
+    label {
+      font-weight: bold;
+      /* Bold labels for better readability */
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      /* Full width */
+      padding: 10px;
+      /* Padding */
+      margin: 10px 0;
+      /* Margin for spacing */
+      border: 1px solid #ccc;
+      /* Light border */
+      border-radius: 4px;
+      /* Rounded corners */
+      box-sizing: border-box;
+      /* Include padding in width */
+    }
+
+    input[type="number"]:focus,
+    input[type="text"]:focus {
+      border-color: #4CAF50;
+      /* Change border color on focus */
+      outline: none;
+      /* Remove default outline */
+    }
+
+    button {
+      background-color: #4CAF50;
+      /* Green background for button */
+      color: white;
+      /* White text on button */
+      border: none;
+      /* No border */
+      padding: 10px 15px;
+      /* Padding */
+      text-align: center;
+      /* Center text */
+      text-decoration: none;
+      /* No underline */
+      display: inline-block;
+      /* Inline block for proper sizing */
+      font-size: 16px;
+      /* Larger font */
+      margin-top: 10px;
+      /* Margin above the button */
+      cursor: pointer;
+      /* Pointer cursor on hover */
+      border-radius: 4px;
+      /* Rounded corners */
+      transition: background-color 0.3s;
+      /* Smooth transition */
+    }
+
+    button:hover {
+      background-color: #45a049;
+      /* Darker green on hover */
+    }
+
+    .error {
+      color: red;
+      /* Red for error messages */
+    }
+
+    .success {
+      color: green;
+      /* Green for success messages */
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Credit Money</h1>
+  <form id="depositForm">
+    <label for="Account-No">Account Number:</label><br>
+    <select id="select" required>
+      {% for item in accounts %}
+      <option value="{{item}}">{{item}}</option>
+      {% endfor %}
+    </select>
+    <br>
+
+    <label for="amount">Amount to Credit:</label><br>
+    <input type="number" id="amount" required step="0.01" min="0.01"><br>
+
+    <button type="submit">Credit</button>
+  </form>
+
+  <div id="message"></div>
+
+  <script>
+    document.getElementById('depositForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const account_no = document.getElementById('select').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+      const messageDiv = document.getElementById('message');
+      messageDiv.innerHTML = ''; // Clear previous messages
+
+      if (amount <= 0) {
+        messageDiv.innerHTML = '<p class="error">Please enter a valid amount to deposit.</p>';
+        return;
+      }
+
+      try {
+        const response = await fetch(`/credit`, { // Change to your server endpoint
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            account_no: account_no,
+            amount: amount,
+          }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          messageDiv.innerHTML = `<p class="success">${data.message}</p>`;
+        } else {
+          throw new Error(data.error || 'An error occurred');
+        }
+      } catch (error) {
+        messageDiv.innerHTML = `<p class="error">Failed to deposit money. ${error.message}</p>`;
+      }
+    });
+  </script>
+
+</body>
+
+</html>

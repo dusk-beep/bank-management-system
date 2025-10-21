@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transaction Log</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      /* Light gray background */
+      margin: 20px;
+      color: #333;
+      /* Dark text color */
+    }
+
+    h1 {
+      color: #28a745;
+      /* Green color for the heading */
+      text-align: center;
+      /* Centering the heading */
+      margin-bottom: 20px;
+      /* Space below the heading */
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      /* Improves table appearance */
+      margin-top: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow for depth */
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      /* Light border color for cells */
+      text-align: left;
+    }
+
+    th {
+      background-color: #28a745;
+      /* Green background for table header */
+      color: white;
+      /* White text for header */
+    }
+
+    .status-completed {
+      color: green;
+      /* Color for completed status */
+      font-weight: bold;
+      /* Make completed status bold */
+    }
+
+    .status-pending {
+      color: orange;
+      /* Color for pending status */
+      font-weight: bold;
+      /* Make pending status bold */
+    }
+
+    .status-failed {
+      color: red;
+      /* Color for failed status */
+      font-weight: bold;
+      /* Make failed status bold */
+    }
+
+    tr:hover {
+      background-color: #e9f7ef;
+      /* Light green highlight on row hover */
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Transaction Log</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Account No</th>
+        <th>Date</th>
+        <th>Amount (€)</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for transaction in transactions %}
+      <tr>
+        <td>{{ transaction[0] }}</td>
+        <td>{{ transaction[1] }}</td>
+        <td>{{ transaction[2] }}</td>
+        <td
+          class="{% if transaction[3] == 'Completed' %}status-completed{% elif transaction[3] == 'Pending' %}status-pending{% elif transaction[3] == 'Failed' %}status-failed{% endif %}">
+          {{ transaction[3] }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</body>
+
+</html>
