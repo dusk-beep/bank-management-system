@@ -83,24 +83,27 @@
   <table>
     <thead>
       <tr>
-        <th>Account No</th>
+        <th>From Account No</th>
         <th>Date</th>
         <th>Amount (€)</th>
-        <th>Status</th>
+        <th>To Account No</th>
       </tr>
     </thead>
     <tbody>
+      {% if transactions %}
       {% for transaction in transactions %}
       <tr>
-        <td>{{ transaction[0] }}</td>
-        <td>{{ transaction[1] }}</td>
-        <td>{{ transaction[2] }}</td>
-        <td
-          class="{% if transaction[3] == 'Completed' %}status-completed{% elif transaction[3] == 'Pending' %}status-pending{% elif transaction[3] == 'Failed' %}status-failed{% endif %}">
-          {{ transaction[3] }}
-        </td>
+        <td>{{ transaction.from_acc_no }}</td> <!-- Ensure to display the correct account -->
+        <td>{{ transaction.date }}</td>
+        <td>{{ transaction.amount }}</td>
+        <td>{{ transaction.to_acc_no }}</td> <!-- Ensure to display the correct account -->
       </tr>
       {% endfor %}
+      {% else %}
+      <tr>
+        <td colspan="4">No transactions found.</td>
+      </tr>
+      {% endif %}
     </tbody>
   </table>
 

@@ -16,17 +16,17 @@
       padding: 0;
     }
 
+
     .navbar {
       background-color: #28a745;
-      /* Green background for navbar */
-      padding: 10px 20px;
-      /* Padding inside the nav */
+      padding: 10px 10px;
       display: flex;
-      /* Flexbox for layout */
+      /* This should ensure children are in a row */
       justify-content: space-between;
       /* Space between items */
       align-items: center;
       /* Center-align items */
+      overflow: hidden;
     }
 
     .navbar a {
@@ -40,7 +40,15 @@
       /* Rounded corners */
       transition: background-color 0.3s;
       /* Smooth transition */
+      white-space: nowrap;
+      /* Prevent text wrapping */
     }
+
+    .navbar .logo {
+      flex: 1;
+      /* Allow the logo to take available space */
+    }
+
 
     .navbar a:hover {
       background-color: #218838;
@@ -148,8 +156,7 @@
   <nav class="navbar">
     <div class="logo">My Bank</div>
     <div>
-      <a href="/debit">Debit</a>
-      <a href="/credit">Credit</a>
+      <a href="/transfer">Transfer</a>
       <a href="/transactions">Transactions</a>
       <a href="/logout">Logout</a>
     </div>
@@ -158,13 +165,22 @@
   <div class="container">
     <h1>Bank Name</h1>
   </div>
-  <div class="user-info">
-    <div>Name: {{user.user_name}}</div>
-    <div>Email: {{user.email}}</div>
-    <div>Start Date: {{user.start_date}}</div>
-    <div>Type: {{user.account_type}}</div>
-    <div>Balance: {{user.account_balance}}</div>
-  </div>
+  <div>Name: {{ user.user_name }}</div>
+  <div>Email: {{ user.email }}</div>
+  <div>Start Date: {{ user.start_date }}</div>
+
+  <h2>Accounts</h2>
+  <ul>
+    {% for account in user.accounts %}
+    <li>
+      Type: {{ account.account_type }} | Balance: €{{ account.account_balance }}
+    </li>
+    {% endfor %}
+  </ul>
+
+  {% if not user.accounts %}
+  <div>No accounts found.</div>
+  {% endif %}
 </body>
 
 </html>

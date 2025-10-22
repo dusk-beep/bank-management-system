@@ -110,15 +110,17 @@
 
   <h1>Debit Money</h1>
   <form id="Debit">
-    <label for="Account-No">Account Number:</label><br>
+    <label for="Account-No">From Account Number:</label><br>
     <select id="select" required>
       {% for item in accounts %}
       <option value="{{item}}">{{item}}</option>
       {% endfor %}
     </select>
-
     <br>
-    <label for="amount">Amount to Debit:</label><br>
+    <label for="amount">To Account Number:</label><br>
+    <input type="number" id="to-account" required><br>
+
+    <label for="amount">Amont to Transfer</label><br>
     <input type="number" id="amount" required><br>
 
     <button type="submit">Confirm</button>
@@ -129,24 +131,26 @@
   <script>
     document.getElementById('Debit').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const account_no = document.getElementById('select').value;
+      const from_account_no = document.getElementById('select').value;
+      const to_account_no = document.getElementById('to-account').value;
       const amount = parseFloat(document.getElementById('amount').value);
       const messageDiv = document.getElementById('message');
       messageDiv.innerHTML = ''; // Clear previous messages
 
       if (amount <= 0) {
-        messageDiv.innerHTML = '<p class="error">Please enter a valid amount to debit.</p>';
+        messageDiv.innerHTML = '<p class="error">Please enter a valid amount to Transfer.</p>';
         return;
       }
 
       try {
-        const response = await fetch(`/debit`, { // Change to your server endpoint
+        const response = await fetch(`/transfer`, { // Change to your server endpoint
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            account_no: account_no,
+            from_acc_no: from_account_no,
+            to_acc_no: to_account_no,
             amount: amount,
           }),
         });
