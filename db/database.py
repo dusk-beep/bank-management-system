@@ -28,34 +28,44 @@ class Database:
             cursor = self.conn.cursor()
 
             cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS Users (
-                        user_id INT PRIMARY KEY AUTO_INCREMENT,
-                        Name varchar(255),
-                        Email Varchar(255) UNIQUE,
-                        Created_at timestamp default current_timestamp
+                    CREATE TABLE IF NOT EXISTS Customer (
+                        cust_id INT PRIMARY KEY AUTO_INCREMENT,
+                        cust_name varchar(255),
+                        cust_email Varchar(255) UNIQUE,
+                        cust_date timestamp default current_timestamp,
+                        password varchar(255)
                     )
             """)
 
             cursor.execute("""
-                    Create table if not EXISTS Accounts (
-                    acc_no int primary key AUTO_INCREMENT,
-                    user_id int,
-                    acc_type enum('savings','current'),
-                    balance Decimal(10,2),
-                    start_date Date,
+                    Create table if not EXISTS Account (
+                        acc_no int primary key AUTO_INCREMENT,
+                        acc_type enum('savings','current'),
+                        balance Decimal(10,2),
+                        cust_id int,
 
-                    foreign key(user_id) REFERENCES Users(user_id)
+                        foreign key(cust_id) REFERENCES Customer(cust_id)
                     )
             """)
 
             cursor.execute("""
-                    CREATE TABLE IF NOT EXISTS Transactions (
+                    CREATE TABLE IF NOT EXISTS Transaction (
                         transaction_id INT PRIMARY KEY AUTO_INCREMENT,
                         amount DECIMAL(10, 2),
-                        transaction_Type ENUM('credit', 'debit'),
                         created_At TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                        acc_no INT,
-                        FOREIGN KEY(acc_no) REFERENCES Accounts(acc_no)
+                        from_acc_no INT,
+                        to_acc_no int,
+                        FOREIGN KEY(from_acc_no) REFERENCES Account(acc_no)
+                        FOREIGN KEY(to_acc_no) REFERENCES Account(acc_no)
+                    )
+                    """)
+
+            cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS Employee (
+                        emp_id INT PRIMARY KEY AUTO_INCREMENT,
+                        emp_address varchar(255),
+                        emp_salary int,
+                        emp_phone
                     )
                     """)
             self.conn.commit()

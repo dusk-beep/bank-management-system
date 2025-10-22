@@ -16,18 +16,17 @@ def home():
 @main.route("/login", methods=["POST"])
 def login():
     user_name = request.form.get("username", "").strip()
-    # TODK passwlrd
-    # password = request.form.get("password", "").strip()
+    password = request.form.get("password", "").strip()
 
     # if not user_name or not password:
     if not user_name:
         flash("Username and password are required.", "error")
         return redirect("/")  # Redirect back to the login page
 
-    # print(f"username: {user_name}, password: {password}")
+    print(f"username: {user_name}, password: {password}")
 
-    select_query = "SELECT * FROM Users WHERE Name = ?"
-    user = db.execute_query(select_query, (user_name,))
+    select_query = "SELECT * FROM Customer WHERE cust_name = ? and password = ?"
+    user = db.execute_query(select_query, (user_name, password))
 
     if user:
         print("Valid user")
